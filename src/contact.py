@@ -21,6 +21,12 @@ class Contact:
             'email': self.email,
         }, ensure_ascii=False)
 
+    def update(self, first, last, phone, email):
+        self.first = first
+        self.last = last
+        self.phone = phone
+        self.email = email
+
     def save(self):
         if self.id is None:
             if len(Contact.contacts) > 0:
