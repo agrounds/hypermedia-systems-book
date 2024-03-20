@@ -56,9 +56,21 @@ class Contact:
                 f.write(f'{contact}\n')
 
     @classmethod
-    def search(cls, query):
-        return cls.contacts.values()
+    def search(cls, text):
+        result = []
+        for c in cls.contacts.values():
+            match_first = c.first is not None and text in c.first
+            match_last = c.last is not None and text in c.last
+            match_email = c.email is not None and text in c.email
+            match_phone = c.phone is not None and text in c.phone
+            if match_first or match_last or match_email or match_phone:
+                result.append(c)
+        return result
 
     @classmethod
     def all(cls):
         return cls.contacts.values()
+
+    @classmethod
+    def find(cls, id_):
+        return cls.contacts.get(id_)

@@ -39,6 +39,12 @@ def new_contact():
     return render_template('new.html', contact=c)
 
 
+@app.route('/contacts/<contact_id>', methods=['GET'])
+def get_contact(contact_id=0):
+    c = Contact.find(int(contact_id))
+    return render_template('show.html', contact=c)
+
+
 if __name__ == '__main__':
     Contact.load_db()
     app.run(port=8000)
