@@ -3,6 +3,7 @@ from contact import Contact
 
 
 app = Flask(__name__)
+app.secret_key = b'my super secret key'
 
 
 @app.route('/')
@@ -34,7 +35,7 @@ def new_contact():
         phone=request.form['phone']
     )
     if c.save():
-        # flash('Created New Contact!')
+        flash('Created New Contact!')
         return redirect('/contacts')
     return render_template('new.html', contact=c)
 
@@ -61,7 +62,7 @@ def edit_contact(contact_id=0):
         phone=request.form['phone'],
     )
     if c.save():
-        # flash('Updated Contact!')
+        flash('Updated Contact!')
         return redirect(f'/contacts/{contact_id}')
     return render_template('edit.html', contact=c)
 
@@ -69,7 +70,7 @@ def edit_contact(contact_id=0):
 @app.route('/contacts/<contact_id>/delete', methods=['POST'])
 def delete_contact(contact_id=0):
     Contact.delete(int(contact_id))
-    # flash('Deleted Contact!')
+    flash('Deleted Contact!')
     return redirect('/contacts')
 
 
