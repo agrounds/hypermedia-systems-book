@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request, render_template
+from flask import Flask, redirect, request, render_template, flash
 from contact import Contact
 
 
@@ -20,5 +20,25 @@ def contacts():
     return render_template('index.html', contacts=contacts_set)
 
 
+@app.route('/contacts/new', methods=['GET'])
+def new_contact_form():
+    return render_template('new.html', contact=Contact())
+
+
+@app.route('/contacts/new', methods=['POST'])
+def new_contact():
+    c = Contact(
+        first=request.form['first_name'],
+        last=request.form['last_name'],
+        email=request.form['email'],
+        phone=request.form['phone']
+    )
+    if c.save():
+        # flash('Created New Contact!')
+        return redirect('/contacts')
+    return render_template('new.html', contact=c)
+
+
 if __name__ == '__main__':
+    Contact.load_db()
     app.run(port=8000)
