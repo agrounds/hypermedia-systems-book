@@ -66,6 +66,13 @@ def edit_contact(contact_id=0):
     return render_template('edit.html', contact=c)
 
 
+@app.route('/contacts/<contact_id>/delete', methods=['POST'])
+def delete_contact(contact_id=0):
+    Contact.delete(int(contact_id))
+    # flash('Deleted Contact!')
+    return redirect('/contacts')
+
+
 if __name__ == '__main__':
     Contact.load_db()
     app.run(port=8000)

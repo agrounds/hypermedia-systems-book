@@ -80,3 +80,8 @@ class Contact:
     @classmethod
     def find(cls, id_):
         return cls.contacts.get(id_)
+
+    @classmethod
+    def delete(cls, id_):
+        del cls.contacts[id_]
+        cls.save_db()
